@@ -1,0 +1,25 @@
+table{
+    width: 100%;
+    border: 2px solid red;
+}
+
+table td{
+    width: 50%;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+table th{
+    border-bottom: 2px solid black;
+}
+
+#delete{
+    color: red;
+    background-color: rgb(233, 233, 233);
+}
+
+#delete:hover{
+    cursor: pointer;
+    background-color: red;
+    color: white;
+}

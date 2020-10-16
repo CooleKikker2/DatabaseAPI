@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Api</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table id="table">
+        <th>Naam</th>
+        <th>Delete</th>
+    </table>
+
+    <script>
+            let xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'product/read_all.php');
+
+            xhr.responseType = 'json';
+
+            xhr.send();
+
+            xhr.onload = function(){
+                var responseObj = xhr.response;
+                for(var i = 0; i < responseObj.length; i++){
+                var row = document.createElement("TR");
+                    document.getElementById("table").appendChild(row)
+                    var item = document.createElement("TD");
+                    var itemtext = document.createTextNode(responseObj[i]['naam'])
+                    document.createTextNode(item);
+                    item.appendChild(itemtext);
+                    item.setAttribute("productId", responseObj[i]["id"]);
+                    row.appendChild(item);
+
+                var deleteitem = document.createElement("TD");
+                var itemtext = document.createTextNode("Delete item");
+                deleteitem.appendChild(itemtext);
+                deleteitem.setAttribute("id", "delete")
+                deleteitem.setAttribute("productId", responseObj[i]["id"]);
+
+
+                deleteitem.addEventListener('click', () => {
+                    var id = event.target.getAttribute("productId");
+                    console.log(id);
+
+                    let deleterequest = new XMLHttpRequest();
+
+                    deleterequest.open('GET', 'product/delete.php?id=' + id);
+
+                    deleterequest.responseType = 'json';
+
+                    deleterequest.send();
+                    deleterequest.onload = function(){
+                        alert(deleterequest.response['message']);
+                    }
+                    event.target.parentElement.remove();
+                }, false);
+
+                row.appendChild(deleteitem);
+            }
+            }
+
+
+
+
+
+            
+            // item.addEventListener('click', () => {
+            //     var clickedItem = event.target
+                
+
+            //     var form = document.createElement("form");
+            //     form.setAttribute("method", "POST")
+            //     var input = document.createElement("input");
+            //     input.setAttribute("name", "newname")
+            //     input.setAttribute("placeholder", clickedItem.innerHTML)
+            //     var submit = document.createElement("input");
+            //     submit.setAttribute("value", ">>")
+            //     submit.setAttribute("type", "submit");
+
+            //     submit.addEventListener('click', () => {
+            //         var itemid = event.target.parentElement.parentElement.getAttribute("productid");
+            //         var setValue = event.target.parentElement.elements['newname'].value;
+                    
+            //         //let update = new XMLHttpRequest();
+
+            //         //update.open('GET', 'product/update.php?id=' + itemid + '&newname=' + setValue);
+
+            //         //update.responseType = 'json';
+
+            //         //update.send();
+
+                    
+            //         const data = { newname: "Test", id: 16 };
+
+            //         fetch('product/update.php', {
+            //         method: 'POST', // or 'PUT'
+            //         headers: {
+            //         'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify(data),
+            //         })
+            //         .then(response => response.json())
+            //         .then(data => {
+            //         console.log('Success:', data);
+            //         })
+            //         .catch((error) => {
+            //         console.error('Error:', error);
+            //         });
+
+
+            //         // function test() {
+            //         //     let responseObj = update.response;
+            //         //     alert(responseObj['message']);
+            //         // }
+
+                    
+
+            //     }, false)
+
+
+            //     form.appendChild(input)
+            //     form.appendChild(submit)
+
+
+
+            //     clickedItem.innerHTML = "";
+            //     clickedItem.appendChild(form);
+            
+            //}, false);
+
+
+            
+            
+
+        
+
+    </script>
+</body>
+</html>
